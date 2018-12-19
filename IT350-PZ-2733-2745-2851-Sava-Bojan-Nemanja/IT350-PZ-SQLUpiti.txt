@@ -1,0 +1,51 @@
+1.
+
+SELECT proizvodna_jedinica.id_proizvodne_jedinice, proizvodna_jedinica.ime_pj, proizvodna_jedinica.mesto_pj, SUM(proizvodnja.kolicina_proizvoda * proizvod.cena) as ukupno
+FROM proizvodna_jedinica
+INNER JOIN proizvodnja on proizvodna_jedinica.id_proizvodne_jedinice = proizvodnja.id_proizvodne_jedinice
+INNER JOIN proizvod on proizvodnja.id_proizvoda = proizvod.id_proizvoda
+WHERE proizvodnja.id_proizvodne_jedinice = 1
+HAVING ukupno > 0
+
+2.
+
+select skladiste.NAZIV_SKLADISTA, skladiste.MESTO_SKLADISTA, stanje_skladista.ID_SKLADISTA, COUNT(stanje_skladista.ID_PROIZVODA)
+from stanje_skladista
+left JOIN proizvod on stanje_skladista.ID_PROIZVODA = proizvod.ID_PROIZVODA
+left join skladiste on stanje_skladista.ID_SKLADISTA = skladiste.ID_SKLADISTA
+GROUP BY stanje_skladista.ID_SKLADISTA
+HAVING COUNT(stanje_skladista.ID_PROIZVODA) > 1
+
+
+3.
+
+SELECT narudzbenica.ID_NARUDZBENICE, narudzbenica.id_proizvodne_jedinice, narudzbenica.ID_SKLADISTA, proizvodna_jedinica.ime_pj, skladiste.naziv_skladista,  narudzbenica.DATUM_SLANJA
+from narudzbenica 
+inner join proizvodna_jedinica on narudzbenica.id_proizvodne_jedinice = proizvodna_jedinica.id_proizvodne_jedinice
+inner join skladiste on narudzbenica.ID_SKLADISTA = skladiste.ID_SKLADISTA
+ORDER BY narudzbenica.datum_slanja DESC LIMIT 1
+
+4.
+
+SELECT * 
+FROM proizvod
+ORDER BY proizvod.CENA DESC
+
+5.
+
+SELECT proizvodnja.datum_proizvodnje, proizvod.NAZIV_PROIZVODA, proizvodnja.kolicina_proizvoda
+FROM proizvodnja
+INNER JOIN proizvod on proizvodnja.ID_PROIZVODA = proizvod.ID_PROIZVODA
+WHERE proizvodnja.kolicina_proizvoda > 100 AND proizvod.jedinica_mere like '%k%g%'
+ORDER BY proizvodnja.datum_proizvodnje ASC
+
+6.
+
+select stanje_skladista.ID_SKLADISTA, COUNT(stanje_skladista.ID_PROIZVODA) as broji, narudzbenica.*
+from stanje_skladista
+left JOIN proizvod on stanje_skladista.ID_PROIZVODA = proizvod.ID_PROIZVODA
+left join skladiste on stanje_skladista.ID_SKLADISTA = skladiste.ID_SKLADISTA
+left JOIN narudzbenica on skladiste.id_skladista = narudzbenica.id_skladista
+WHERE narudzbenica.datum_slanja BETWEEN (NOW() - INTERVAL 1 MONTH) AND NOW()
+GROUP BY stanje_skladista.ID_SKLADISTA
+ORDER BY broji DESC LIMIT 1

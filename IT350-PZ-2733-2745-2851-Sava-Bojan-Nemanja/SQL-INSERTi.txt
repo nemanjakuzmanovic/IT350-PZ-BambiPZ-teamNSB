@@ -1,0 +1,46 @@
+INSERT INTO `tip_proizvoda` (`ID_TIPA_PROIZVODA`, `NAZIV_TIPA_PROIZVODA`) VALUES
+(1, 'proizvod'),
+(2, 'polu proizvod');
+
+
+INSERT INTO `proizvod` (`ID_PROIZVODA`, `ID_TIPA_PROIZVODA`, `NAZIV_PROIZVODA`, `JEDINICA_MERE`, `CENA`) VALUES
+(1, 1, 'Plazma', 'kg', 1000),
+(2, 1, 'Krem banana', 'komad', 10),
+(3, 2, 'secer', 'kg', 100),
+(4, 2, 'cokolada', 'kg', 500);
+
+INSERT INTO `proizvodna_jedinica` (`ID_PROIZVODNE_JEDINICE`, `IME_PJ`, `MESTO_PJ`, `UKUPAN_KAPACITET_PROIZVODNJE`) VALUES
+(1, 'prva jedinica', 'Beograd', 100),
+(2, 'druga jedinica', 'Novi Sad', 200),
+(3, 'treca jedinica', 'Kragujevac', 100),
+(4, 'cetvrta jedinica', 'Nis', 200);
+
+
+INSERT INTO `skladiste` (`ID_SKLADISTA`, `NAZIV_SKLADISTA`, `MESTO_SKLADISTA`, `UKUPAN_KAPACITET_ZALIHA_SKLADISTA`) VALUES
+(1, 'prvo skladiste', 'Beograd', 5000),
+(2, 'drugo skladiste', 'gornji milanovac', 5000),
+(3, 'trece skladiste', 'Vrsac', 10000),
+(4, 'cetvrto skladiste', 'zlatibor', 10000);
+
+
+INSERT INTO `proizvodnja` (`ID_PROIZVODNJE`, `ID_PROIZVODNE_JEDINICE`, `ID_PROIZVODA`, `KOLICINA_PROIZVODA`, `MIN_KAPACITET_PROIZVODNJE`, `MAX_KAPACITET_PROIZVODNJE`) VALUES
+(1, 1, 1, 0, 100, 1000),
+(2, 2, 2, 0, 110, 2000),
+(3, 3, 3, 950, 120, 3000),
+(4, 4, 4, 1000, 125, 300),
+(5, 1, 3, 400, 600, 2000),
+(6, 3, 2, 600, 100, 1000),
+(7, 1, 4, 0, 200, 1050);
+
+
+INSERT INTO `stanje_skladista` (`ID_STANJA_SKLADISTA`, `ID_SKLADISTA`, `ID_PROIZVODA`, `TRENUTNA_KOLICINA`) VALUES
+(1, 1, 1, 2000),
+(2, 2, 2, 3000),
+(3, 3, 3, 3000),
+(4, 4, 4, 5000),
+(5, 1, 2, 400),
+(6, 2, 1, 750);
+
+INSERT INTO `narudzbenica` (`id_narudzbenice`, `id_proizvoda`, `id_skladista`, `id_proizvodne_jedinice`, `datum_slanja`, `kolicina_porucenog_proizvoda`) VALUES
+(1, 5, 1, 4, '2017-01-10', 1000),
+(2, 2, 3, 4, '2017-01-12', 100);
